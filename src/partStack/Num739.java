@@ -18,34 +18,33 @@ import org.junit.jupiter.api.Test;
 public class Num739 {
     public int[] dailyTemperatures(int[] temperatures) {
         // [value, index]
-        Stack<int[]> stk = new Stack<>();
+        Stack<Integer> stk = new Stack<>();
+        Stack<Integer> idxStk = new Stack<>();
 
-        int index = temperatures.length - 1;
         LinkedList<Integer> list = new LinkedList<>();
-        while (index >= 0){
-            if (stk.isEmpty()) {
-                list.addFirst(0);
-                stk.push(new int[]{temperatures[index], index});
-            }
-            else {
-                boolean isHighest = true;
-                while (!stk.isEmpty()){
-                    int[] peek = stk.peek();
-                    if (peek[0] > temperatures[index]){
-                        list.addFirst(peek[1] - index);
-                        stk.push(new int[]{temperatures[index], index});
-                        isHighest = false;
-                        break;
-                    }else{
-                        stk.pop();
-                    }
-                }
-                if (isHighest){
-                    list.addFirst(0);
-                    stk.push(new int[]{temperatures[index], index});
+        for (int index = temperatures.length - 1; index >= 0; index--) {
+            int temperature = temperatures[index];
+            int lastTempIdx = 0;
+            while (!stk.isEmpty()){
+                int peek = stk.peek();
+                lastTempIdx = idxStk.peek();
+
+                if (peek <= temperature){
+                    stk.pop();
+                    idxStk.pop();
+                }else{
+                    break;
                 }
             }
-            index--;
+            if (stk.isEmpty()){
+                stk.push(temperature);
+                idxStk.push(index);
+                list.add(0);
+            }
+
+            stk.push(temperature);
+            idxStk.push(index);
+            list.add(lastTempIdx - index);
         }
         int[] answer = new int[list.size()];
         for (int i = 0; i < list.size(); i++) {
