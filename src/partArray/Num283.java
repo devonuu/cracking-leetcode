@@ -1,4 +1,8 @@
 package partArray;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 /**
  * Project : algorithm
  * Created by gonuu
@@ -11,14 +15,25 @@ package partArray;
 
 public class Num283 {
     public void moveZeroes(int[] nums) {
-        int zeroIndex = 0;
+        int zero_index = 0;
         for (int i = 0; i < nums.length; i++) {
-            if (nums[i] != 0) {
-                int tmp = nums[zeroIndex];
-                nums[zeroIndex] = nums[i];
-                nums[i] = tmp;
-                zeroIndex++;
+            if (nums[i] != 0){
+                int tmp = nums[i];
+                nums[i] = nums[zero_index];
+                nums[zero_index] = tmp;
+                zero_index++;
             }
         }
+    }
+
+    @Test
+    void 영이_아닌_숫자_옮기기(){
+        int[] test1 = new int[]{0,1,0,3,12};
+        moveZeroes(test1);
+        Assertions.assertArrayEquals(test1, new int[]{1,3,12,0,0});
+
+        test1 = new int[]{0};
+        moveZeroes(test1);
+        Assertions.assertArrayEquals(test1, new int[]{0});
     }
 }
