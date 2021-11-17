@@ -15,28 +15,24 @@ import org.junit.jupiter.api.Test;
 
 public class Num75 {
     public void sortColors(int[] nums) {
-        int left = 0; //0 관리
-        int mid = 0;
-        int right = nums.length - 1; //2 관리함
-
-        while (mid <= right){
-            //값이 2일 경우 바꾸기만함.
-            //값이 0일 경우 바꾸기만.
-            //값이 1일 경우 이동.
-            if (nums[mid] == 2){
-                swap(nums, right, mid);
-                right--;
-            }else if (nums[mid] == 0){
-                swap(nums, left, mid);
-                left++;
-                mid++;
-            }else {
-                mid++;
+        int idx0 = 0;
+        int idx1 = 0;
+        int idx2 = nums.length - 1;
+        while (idx1 <= idx2){
+            if (nums[idx1] == 0){
+                swap(nums, idx1, idx0);
+                idx0++;
+                idx1++;
+            }else if (nums[idx1] == 2){
+                swap(nums, idx1, idx2);
+                idx2--;
+            }else{
+                idx1++;
             }
         }
     }
 
-    static void swap(int[] nums, int a, int b){
+    public static void swap(int[] nums, int a, int b){
         int tmp = nums[a];
         nums[a] = nums[b];
         nums[b] = tmp;

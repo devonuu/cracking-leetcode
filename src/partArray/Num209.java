@@ -18,13 +18,12 @@ public class Num209 {
         int sum = 0;
         int min = Integer.MAX_VALUE;
 
-        int start = 0;
-        int end = 0;
-        while (end < nums.length){
-            sum += nums[end++];
+        int left = 0;
+        for (int right = 0; right < nums.length; right++) {
+            sum += nums[right];
             while (sum >= target){
-                min = Math.min(min, end - start);
-                sum -= nums[start++];
+                min = Math.min(min, right - left + 1);
+                sum -= nums[left++];
             }
         }
         if (min == Integer.MAX_VALUE) return 0;
